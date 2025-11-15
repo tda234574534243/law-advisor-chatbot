@@ -1,0 +1,23 @@
+[
+  {
+    "chuong": "Chương I",
+    "ten_chuong": "Những quy định chung",
+    "dieu": 1,
+    "noi_dung": "Phạm vi điều chỉnh và đối tượng áp dụng của Luật Đất đai.",
+    "keyphrase": ["phạm vi điều chỉnh", "đối tượng áp dụng"]
+  },
+  {
+    "chuong": "Chương II",
+    "ten_chuong": "Quyền sử dụng đất",
+    "dieu": 5,
+    "noi_dung": "Người sử dụng đất có quyền chuyển nhượng, cho thuê, thừa kế quyền sử dụng đất.",
+    "keyphrase": ["quyền sử dụng đất", "chuyển nhượng", "cho thuê", "thừa kế"]
+  },
+  {
+    "chuong": "Chương III",
+    "ten_chuong": "Trách nhiệm sử dụng đất",
+    "dieu": 10,
+    "noi_dung": "Người sử dụng đất phải sử dụng đất đúng mục đích, bảo vệ đất và thực hiện nghĩa vụ tài chính.",
+    "keyphrase": ["sử dụng đất đúng mục đích", "nghĩa vụ tài chính"]
+  }
+]

@@ -1,0 +1,4 @@
+flask
+tinydb
+sentence-transformers
+torch
