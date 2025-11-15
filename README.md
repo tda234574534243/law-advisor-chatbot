@@ -16,21 +16,29 @@ Tính năng:
 ---------------------------------------------------
 
 Cấu trúc project:
-
-phapluatfull/
-├─ backend/
-│  ├─ app.py              # Flask backend
-│  ├─ bot.py              # Logic chatbot
-│  ├─ database.py         # Quản lý DB & feedback
-│  ├─ search.py           # Keyphrase & semantic search
-│  └─ data/
-│     ├─ law_db.json      # Database luật
-│     └─ luat_dat_dai.json # Dữ liệu gốc
-├─ frontend/
-│  ├─ index.html
-│  ├─ main.js
-│  └─ style.css
-└─ README.txt
+│   .gitignore
+│   README.md
+│   requirements.txt
+│
+├───backend
+│   │   app.py
+│   │   bot.py
+│   │   database.py
+│   │   search.py
+│   
+│   
+│          
+│           
+│           
+│
+├───data
+│       law_db.json
+│       luat_dat_dai.json
+│
+└───frontend
+        index.html
+        main.js
+        style.css
 
 ---------------------------------------------------
 
