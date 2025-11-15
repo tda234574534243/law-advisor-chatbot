@@ -1,1 +1,7 @@
 __pycache__/
+data/law_db.json
+data/feedback.json
+*.pth
+*.pt
+venv/
+env/

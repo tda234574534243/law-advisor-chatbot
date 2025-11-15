@@ -3,7 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>Chatbot Luật Đất Đai</title>
-    <link rel="stylesheet" href="style.css">
+    <style>
+      body { font-family: Arial, sans-serif; max-width:800px; margin:20px auto; }
+      #chatbox { border:1px solid #ddd; padding:12px; height:400px; overflow:auto; background:#fafafa; }
+      p { margin:6px 0; }
+      input { width:70%; padding:8px; }
+      button { padding:8px 10px; margin-left:6px; }
+    </style>
 </head>
 <body>
     <h1>Chatbot Luật Đất Đai</h1>
@@ -11,6 +17,6 @@
     <input type="text" id="question" placeholder="Nhập câu hỏi..." />
     <button onclick="askQuestion()">Gửi</button>
 
-    <script src="main.js"></script>
+    <script src="/static/main.js"></script>
 </body>
 </html>

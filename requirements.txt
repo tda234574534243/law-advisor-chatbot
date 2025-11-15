@@ -2,3 +2,6 @@ flask
 tinydb
 sentence-transformers
 torch
+transformers
+scikit-learn
+uvicorn
