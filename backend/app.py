@@ -3,6 +3,7 @@ from flask import Flask, request, jsonify, send_from_directory
 from bot import answer_question, learn_from_feedback
 from database import load_data, list_feedback, promote_feedback
 import os
+import json
 
 # Dùng static_url_path để frontend được serve rõ ràng
 app = Flask(
@@ -11,14 +12,21 @@ app = Flask(
     static_folder="../frontend"
 )
 
-load_data()
+# ===== Load dữ liệu =====
+DATA_DIR = os.path.join(os.path.dirname(__file__), "..", "data")
+LAW_DB_FILE = os.path.join(DATA_DIR, "law_db.json")
 
+load_data()  # load feedback.json và refresh embeddings
+
+# Load law corpus để semantic search
+with open(LAW_DB_FILE, "r", encoding="utf-8") as f:
+    LAW_CORPUS = json.load(f)
+
+# ===== Routes =====
 @app.route("/")
 def index():
-    # index.html sẽ được serve từ static_folder
     return send_from_directory(app.static_folder, "index.html")
 
-# Serve tất cả file static khác (main.js, style.css, hình ảnh...)
 @app.route("/static/<path:path>")
 def static_files(path):
     return send_from_directory(app.static_folder, path)
@@ -30,7 +38,9 @@ def ask():
     user_id = data.get("user_id", "default_user")
     if not question:
         return jsonify({"error": "Question required"}), 400
-    answer, related = answer_question(user_id, question)
+    
+    # Truyền LAW_CORPUS vào bot
+    answer, related = answer_question(user_id, question, law_corpus=LAW_CORPUS)
     return jsonify({"answer": answer, "related_questions": related})
 
 @app.route("/feedback", methods=["POST"])
