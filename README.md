@@ -93,7 +93,3 @@ Lưu ý:
 - Nếu database rỗng, luat_dat_dai.json sẽ được load tự động.
 
 ---------------------------------------------------
-
-License:
-
-Miễn phí sử dụng cho mục đích học tập và nghiên cứu.
