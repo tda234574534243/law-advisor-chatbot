@@ -1,8 +1,8 @@
-________________________________________
+
 📌 Frontend – Chatbot Luật Đất Đai
 Giao diện web đơn giản cho phép người dùng đặt câu hỏi về Luật Đất Đai, gửi yêu cầu đến backend Flask, nhận câu trả lời và hiển thị các đoạn luật được highlight.
 Frontend được viết hoàn toàn bằng HTML + CSS + JavaScript thuần
-________________________________________
+
 🚀 Tính năng
 •	Giao diện chat đơn giản, dễ dùng
 •	Gửi câu hỏi tới API /ask
@@ -10,13 +10,7 @@ ________________________________________
 •	Gợi ý các câu hỏi liên quan
 •	Gửi phản hồi người dùng qua API /feedback
 •	Tự động cuộn xuống tin nhắn mới nhất
-________________________________________
-📁 Các file trong thư mục frontend/
-frontend/
-├── index.html      # Giao diện chính
-├── main.js         # Logic gửi câu hỏi và xử lý phản hồi
-└── style.css       # Style giao diện
-________________________________________
+
 🖼️ 1. index.html
 •	Tạo khung giao diện chatbot
 •	Input để nhập câu hỏi
@@ -26,7 +20,7 @@ Frontend được serve qua Flask:
 <script src="/static/main.js"></script>
 Nghĩa là backend phải dùng:
 static_folder="../frontend"
-________________________________________
+
 🧠 2. main.js
 File này xử lý toàn bộ logic giao tiếp:
 ✔ Gửi câu hỏi
@@ -50,7 +44,7 @@ fetch("/feedback", {
 });
 ✔ Hàm escape để tránh XSS
 Chỉ áp dụng cho input người dùng nhập.
-________________________________________
+
 🎨 3. style.css
 Thiết kế đơn giản:
 •	Khung chat có border, scrollable
@@ -64,7 +58,7 @@ python app.py
 Sau đó truy cập:
 👉 http://localhost:5000/
 index.html sẽ tự được tải lên từ thư mục frontend.
-________________________________________
+
 🔧 API mà frontend sử dụng
 POST /ask
 Gửi câu hỏi → trả về:
