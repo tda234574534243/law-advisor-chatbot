@@ -1,5 +1,3 @@
-Dưới đây là README.md hoàn chỉnh, trình bày đẹp, rõ ràng, chuyên nghiệp, bạn chỉ cần copy nguyên file và dán vào frontend/README.md.
-________________________________________
 📌 Frontend – Chatbot Luật Đất Đai
 Giao diện web đơn giản cho phép người dùng đặt câu hỏi liên quan đến Luật Đất Đai, gửi yêu cầu đến backend Flask, nhận câu trả lời và hiển thị các đoạn luật được highlight màu sắc.
 Frontend được phát triển hoàn toàn bằng HTML + CSS + JavaScript thuần, không sử dụng bất kỳ framework nào.
