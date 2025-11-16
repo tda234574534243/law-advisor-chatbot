@@ -9,10 +9,10 @@ async function askQuestion() {
     });
     const data = await resp.json();
     const chatbox = document.getElementById("chatbox");
-    chatbox.innerHTML += `<p><b>Q:</b> ${escapeHtml(question)}</p>`;
+    chatbox.innerHTML += `<p class="question"><b>Q:</b> ${escapeHtml(question)}</p>`;
     
     // SỬA ĐỔI: Bỏ escapeHtml cho câu trả lời để cho phép hiển thị HTML (highlight)
-    chatbox.innerHTML += `<p><b>A:</b> ${data.answer ? data.answer : 'Không có'}</p>`; 
+    chatbox.innerHTML += `<p class="answer"><b>A:</b> ${data.answer ? data.answer : 'Không có'}</p>`; 
     
     if (data.related_questions && data.related_questions.length) {
         chatbox.innerHTML += `<p><i>Câu hỏi liên quan:</i></p>`;

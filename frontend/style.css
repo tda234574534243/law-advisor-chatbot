@@ -1,0 +1,12 @@
+#chatbox { 
+    border: 1px solid #ddd; 
+    padding: 12px; 
+    height: 420px;
+    overflow-y: auto; 
+    background: #fdfdfd;
+    border-radius: 8px;
+}
+.question { font-weight:bold; color:#333; }
+.answer { padding:8px; background:#eef7ff; border-radius:6px; }
+.related { color:#777; margin-top:4px; }
+.law-highlight { color:#1565c0; font-weight:bold; }

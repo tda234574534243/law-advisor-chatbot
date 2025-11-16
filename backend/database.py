@@ -56,29 +56,39 @@ def promote_feedback(index):
     feedback_list = list_feedback()
     if index < 0 or index >= len(feedback_list):
         raise IndexError("Invalid feedback index")
+
     item = feedback_list[index]
-
     docs = get_law_docs()
-    new_emb = model.encode([item["answer"]], convert_to_tensor=True)
-    for d in docs:
-        existing_emb = model.encode([d.get("noi_dung", "")], convert_to_tensor=True)
-        sim = util.cos_sim(new_emb, existing_emb).item()
-        if sim > 0.92:
-            return False, "Similar existing doc, not promoted."
 
+    # Encode
+    fb_emb = model.encode([item["answer"]], convert_to_tensor=True)
+
+    # Check similarity
+    sims = []
+    for d in docs:
+        d_emb = model.encode([d["noi_dung"]], convert_to_tensor=True)
+        sims.append(util.cos_sim(fb_emb, d_emb).item())
+
+    best_sim = max(sims)
+    if best_sim > 0.85:
+        return False, "Content too similar; auto-reject."
+
+    # Promote
     new_doc = {
         "chuong": "Chưa phân loại",
-        "ten_chuong": "Feedback promoted",
+        "ten_chuong": "Tự động thêm từ feedback",
         "dieu": len(docs) + 1,
         "noi_dung": item["answer"],
-        "keyphrase": item["question"].lower().split()[:6]
+        "keyphrase": item["question"].lower().split()[:6],
+        "source": "feedback",
+        "confidence": 1 - best_sim
     }
+
     docs.append(new_doc)
     save_law_docs(docs)
 
-    # Xóa feedback đã promote
     feedback_list.pop(index)
     with open(FEEDBACK_DB, "w", encoding="utf-8") as f:
         json.dump(feedback_list, f, ensure_ascii=False, indent=2)
 
-    return True, "Promoted"
+    return True, "Promoted with confidence {:.2f}".format(1 - best_sim)
