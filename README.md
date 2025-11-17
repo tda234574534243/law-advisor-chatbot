@@ -43,31 +43,31 @@ Cấu trúc project:
 ---------------------------------------------------
 
 Yêu cầu:
-
+```bash
 - Python 3.10+
 - pip packages:
   - flask
   - tinydb
   - torch
   - sentence-transformers
-
+```
 Cài đặt packages:
-
+```bash
 pip install flask tinydb torch sentence-transformers
-
+```
 ---------------------------------------------------
 
 Cách chạy project:
 
 1. Chạy backend Flask:
-
+```bash
 cd backend
 python app.py
-
+```
 2. Mở trình duyệt vào:
-
+```
 http://127.0.0.1:5000
-
+```
 ---------------------------------------------------
 
 Sử dụng Chatbot:
