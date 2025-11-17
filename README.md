@@ -50,18 +50,6 @@
 
 <p align="right">(<a href="#readme-top">trở về đầu</a>)</p>
 
-### Công nghệ sử dụng 🤖
-
-Dự án được xây dựng dựa trên các thư viện và framework sau:
-
-* [![Python][python-shield]][python-url]
-* [![Flask][flask-shield]][flask-url]
-* [![Sentence Transformers][st-shield]][st-url]
-* **TinyDB** (Cơ sở dữ liệu NoSQL đơn giản, nhẹ)
-* **HTML/CSS/JS** (Giao diện người dùng)
-
-<p align="right">(<a href="#readme-top">trở về đầu</a>)</p>
-
 ### Tính năng cốt lõi ✨
 * **Tra cứu Ngữ nghĩa (Semantic Search)**: Sử dụng mô hình Sentence Transformers để tìm kiếm câu trả lời dựa trên ý nghĩa của câu hỏi, không chỉ là từ khóa.
 * **Đề xuất Câu hỏi Liên quan**: Gợi ý các câu hỏi khác có ý nghĩa tương tự câu hỏi hiện tại.
