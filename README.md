@@ -14,7 +14,7 @@ Tính năng:
 - Lưu lịch sử hội thoại cho multi-turn conversation.
 
 ---------------------------------------------------
-
+```bash
 Cấu trúc project:
 │   .gitignore
 │   README.md
@@ -39,7 +39,7 @@ Cấu trúc project:
         index.html
         main.js
         style.css
-
+```
 ---------------------------------------------------
 
 Yêu cầu:
