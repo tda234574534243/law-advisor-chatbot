@@ -1,29 +1,14 @@
 <a id="readme-top"></a>
-[![Python][python-shield]][python-url]
-[![Flask][flask-shield]][flask-url]
-[![Sentence Transformers][st-shield]][st-url]
-[![Unlicense License][license-shield]][license-url]
-[![LinkedIn][linkedin-shield]][linkedin-url]
+[![Python](https://img.shields.io/badge/Python-3.11-blue)](https://www.python.org/)
+[![Flask](https://img.shields.io/badge/Flask-2.3-green)](https://flask.palletsprojects.com/)
+[![Sentence Transformers](https://img.shields.io/badge/Sentence%20Transformers-2.2-orange)](https://www.sbert.net/)
+[![Unlicense License](https://img.shields.io/badge/License-Unlicense-lightgrey)](https://unlicense.org/)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Profile-blue)](https://www.linkedin.com/in/username/)
 
-<br />
-<div align="center">
-  <a href="https://github.com/tda234574534243/law-advisor-chatbot">
-    <img src="images/logo-luat.png" alt="Logo" width="80" height="80">
-  </a>
-
-  <h3 align="center">Chatbot Luật Đất Đai - Semantic Search Q&A</h3>
+  <h2 align="center">Chatbot Luật Đất Đai - Semantic Search Q&A</h2>
 
   <p align="center">
     Ứng dụng tra cứu kiến thức pháp luật chuyên sâu về Luật Đất Đai bằng Semantic Search và Feedback Loop.
-    <br />
-    <a href="#usage"><strong>Khám phá các tính năng »</strong></a>
-    <br />
-    <br />
-    <a href="http://127.0.0.1:5000">View Demo (Local)</a>
-    &middot;
-    <a href="https://github.com/tda234574534243/law-advisor-chatbot/issues/new?labels=bug&template=bug-report---.md">Báo cáo Lỗi</a>
-    &middot;
-    <a href="https://github.com/tda234574534243/law-advisor-chatbot/issues/new?labels=enhancement&template=feature-request---.md">Đề xuất Tính năng</a>
   </p>
 </div>
 
