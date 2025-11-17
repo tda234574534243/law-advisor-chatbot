@@ -73,7 +73,7 @@ Bạn cần cài đặt các yêu cầu sau trên hệ thống của mình:
 
 1.  **Clone Repository:**
     ```sh
-    git clone [https://github.com/tên_người_dùng_github_của_bạn/chatbot-luat-dat-dai.git](https://github.com/tên_người_dùng_github_của_bạn/chatbot-luat-dat-dai.git)
+    git clone https://github.com/tda234574534243/law-advisor-chatbot.git
     cd chatbot-luat-dat-dai
     ```
 2.  **Cài đặt các gói Python:**
@@ -109,7 +109,7 @@ Làm theo các bước sau để chạy và sử dụng chatbot:
 3.  **Sử dụng Chatbot:**
     * Nhập câu hỏi của bạn về Luật Đất Đai.
     * Nhấn "Gửi" để nhận câu trả lời.
-    * Sử dụng nút **"👍 Feedback"** nếu bạn thấy câu trả lời không chính xác hoặc muốn bổ sung kiến thức mới. Dữ liệu này sẽ được lưu vào `law_db.json`.
+    * Sử dụng nút **"👍 Feedback"** nếu bạn thấy câu trả lời không chính xác hoặc muốn bổ sung kiến thức mới. Dữ liệu này sẽ được lưu vào `feedback.json`.
 
 <p align="right">(<a href="#readme-top">trở về đầu</a>)</p>
 
