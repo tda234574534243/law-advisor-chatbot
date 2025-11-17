@@ -3,7 +3,6 @@
 [![Flask](https://img.shields.io/badge/Flask-2.3-green)](https://flask.palletsprojects.com/)
 [![Sentence Transformers](https://img.shields.io/badge/Sentence%20Transformers-2.2-orange)](https://www.sbert.net/)
 [![Unlicense License](https://img.shields.io/badge/License-Unlicense-lightgrey)](https://unlicense.org/)
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-Profile-blue)](https://www.linkedin.com/in/username/)
 
   <h2 align="center">Chatbot Luật Đất Đai - Semantic Search Q&A</h2>
 
