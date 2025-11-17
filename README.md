@@ -5,7 +5,6 @@
 [![Unlicense License][license-shield]][license-url]
 [![LinkedIn][linkedin-shield]][linkedin-url]
 
-
 <br />
 <div align="center">
   <a href="https://github.com/tda234574534243/law-advisor-chatbot">
@@ -21,9 +20,12 @@
     <br />
     <br />
     <a href="http://127.0.0.1:5000">View Demo (Local)</a>
+    &middot;
+    <a href="https://github.com/tda234574534243/law-advisor-chatbot/issues/new?labels=bug&template=bug-report---.md">Báo cáo Lỗi</a>
+    &middot;
+    <a href="https://github.com/tda234574534243/law-advisor-chatbot/issues/new?labels=enhancement&template=feature-request---.md">Đề xuất Tính năng</a>
   </p>
 </div>
-
 
 <details>
   <summary>Mục lục</summary>
