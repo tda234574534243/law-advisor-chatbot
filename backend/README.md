@@ -170,14 +170,15 @@ Pipeline trả lời:
 
 
  📌 5. API Endpoints
-
+ 
+```bash
 | Method | Endpoint          | Mô tả                    |
 | GET    | `/`               | Trả frontend             |
 | POST   | `/ask`            | Trả lời câu hỏi luật     |
 | POST   | `/feedback`       | Lưu phản hồi người dùng  |
 | GET    | `/admin/feedback` | Danh sách phản hồi       |
 | POST   | `/admin/promote`  | Thêm phản hồi thành luật |
-
+```
 
 
  📌 6. Mô hình AI đang dùng
@@ -224,12 +225,6 @@ Tự động cải thiện theo thời gian.
  Có thể bật GPU để tăng tốc embedding và LLM
  Nên deploy backend bằng Gunicorn hoặc Uvicorn + nginx
  Nếu triển khai trên VPS cần preload model trước để tránh load lâu
-
-
-
- 📌 9. License
-
-MIT 
 
 
 
