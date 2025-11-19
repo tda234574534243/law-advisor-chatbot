@@ -103,6 +103,31 @@ button.feedback-btn:hover {
 }
 
 .law-highlight {
-    color:#1565c0; 
+    color:#f44336; 
     font-weight:bold; 
+}
+
+.answer-block { 
+    margin: 6px 0; 
+    border: 1px solid #ccc; 
+    border-radius: 8px; 
+    background: #fffde7;
+    overflow: hidden;
+}
+
+.answer-block .title { 
+    font-weight: bold; 
+    color: #1565c0; 
+    padding: 6px 10px;
+    cursor: pointer;
+}
+
+.answer-block .content { 
+    padding: 6px 10px;
+    display: none;
+    max-height: 200px;
+    overflow-y: auto;
+}
+.answer-block.active .content {
+    display: block;
 }
