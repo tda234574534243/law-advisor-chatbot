@@ -59,7 +59,7 @@ body {
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    /* Ban đầu nhỏ gọn */
+
     height: auto;
     min-height: 260px;
     max-height: 80vh;
@@ -71,7 +71,7 @@ body {
     height: 80vh;
 }
 
-/* Header đẹp như hình */
+
 header {
     background: #1565c0;
     color: white;
@@ -84,14 +84,13 @@ header {
     box-shadow: 0 2px 10px rgba(0,0,0,0.1);
 }
 
-/* Khu vực tin nhắn */
+
 #chatbox {
     flex: 1;
     overflow-y: auto;
     padding: 20px;
     background: #fdfdfd;
     min-height: 120px;
-    /* Scrollbar đẹp */
     scrollbar-width: thin;
     scrollbar-color: #c0c0c0 transparent;
 }
@@ -140,7 +139,7 @@ header {
     font-size: 15px;
 }
 
-/* Câu hỏi gợi ý */
+
 .related-title {
     font-style: italic;
     color: #666;
