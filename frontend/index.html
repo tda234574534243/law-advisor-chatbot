@@ -10,13 +10,26 @@
         <header>Chatbot Luật Đất Đai</header>
 
         <div id="chatbox">
-           
-            <div class="welcome">
-                
+        
+            <div class="welcome-section">
+                <div class="robot-icon">Robot</div>
                 <p class="greeting">Xin chào! Tôi là trợ lý pháp lý</p>
-                <p class="subtitle">Chuyên tư vấn <strong>Luật Đất đai</strong></p>
-                
-               
+                <p class="subtitle">Chuyên tư vấn <strong>Luật Đất đai 2024</strong> mới nhất</p>
+
+                <div class="suggested-questions">
+                    <div class="suggestion" onclick="askSuggested('Nguyên tắc sử dụng đất là gì?')">
+                        Nguyên tắc sử dụng đất là gì?
+                    </div>
+                    <div class="suggestion" onclick="askSuggested('Thời hạn sử dụng đất nông nghiệp?')">
+                        Thời hạn sử dụng đất nông nghiệp?
+                    </div>
+                    <div class="suggestion" onclick="askSuggested('Chuyển mục đích sử dụng đất cần giấy tờ gì?')">
+                        Chuyển mục đích sử dụng đất cần gì?
+                    </div>
+                    <div class="suggestion" onclick="askSuggested('Quyền và nghĩa vụ của người sử dụng đất?')">
+                        Quyền & nghĩa vụ của người sử dụng đất
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -27,7 +40,11 @@
     </div>
 
     <script src="/static/main.js"></script>
-
-    
+    <script>
+        function askSuggested(text) {
+            document.getElementById('question').value = text;
+            askQuestion();
+        }
+    </script>
 </body>
 </html>

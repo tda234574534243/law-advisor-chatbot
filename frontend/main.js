@@ -5,12 +5,19 @@ async function askQuestion() {
 
     const chatbox = document.getElementById("chatbox");
 
-    // Add user question
-    const qDiv = document.createElement('p');
+    const welcomeSection = document.querySelector('.welcome-section');
+    if (welcomeSection) {
+        welcomeSection.remove(); 
+    }
+
+
+    document.querySelector('.chat-container').classList.add('has-content');
+
+    // Thêm câu hỏi người dùng
+    const qDiv = document.createElement('div');
     qDiv.className = 'question';
     qDiv.innerHTML = `<b>Q:</b> ${escapeHtml(question)}`;
     chatbox.appendChild(qDiv);
-    scrollToBottom();
 
     try {
         const resp = await fetch("/ask", {
@@ -20,87 +27,117 @@ async function askQuestion() {
         });
         const data = await resp.json();
 
-        // Handle answer (luôn show, kể cả trống)
+        // XỬ LÝ NHIỀU ĐIỀU LUẬT 
         if (Array.isArray(data.answer) && data.answer.length > 0) {
             data.answer.forEach(block => {
-                const blockDiv = document.createElement('div');
-                blockDiv.className = 'answer-block';
-                blockDiv.innerHTML = `
-                    <div class="title" onclick="toggleBlock(this)">${escapeHtml(block.title)}</div>
-                    <div class="content">${block.content || 'Không có nội dung'}<br>
+                const lawBlock = document.createElement('div');
+                lawBlock.className = 'law-block';
+
+                lawBlock.innerHTML = `
+                    <div class="law-header" onclick="toggleLawBlock(this)">
+                        <span>${escapeHtml(block.title || "Thông tin pháp lý")}</span>
+                       <span class="arrow">&#9660</span>
+                    </div>
+                    <div class="law-content">
+                        ${block.reference ? `<div class="law-ref">${escapeHtml(block.reference)}</div>` : ''}
+                        <div class="law-text">${block.content || 'Không có nội dung'}</div>
                         <button class="feedback-btn" onclick="sendFeedback('${escapeJs(question)}','${escapeJs(block.content || "")}')">👍 Gửi Feedback</button>
                     </div>
                 `;
-                chatbox.appendChild(blockDiv);
+                chatbox.appendChild(lawBlock);
             });
         } else {
-            const aDiv = document.createElement('p');
+            // Trường hợp trả lời dạng text đơn
+            const aDiv = document.createElement('div');
             aDiv.className = 'answer';
-            aDiv.innerHTML = `<b>A:</b> ${escapeHtml(data.answer || 'Không có câu trả lời')} `;
+            aDiv.innerHTML = `<b>A:</b> ${escapeHtml(data.answer || 'Không tìm thấy thông tin phù hợp.')}`;
             chatbox.appendChild(aDiv);
         }
 
-        // Related questions
-        if (data.related_questions && data.related_questions.length) {
-            const relatedTitle = document.createElement('div');
-            relatedTitle.innerHTML = `<b>Câu hỏi liên quan:</b>`;
-            chatbox.appendChild(relatedTitle);
+        // CÂU HỎI GỢI Ý
+        if (data.related_questions && data.related_questions.length > 0) {
+            const relTitle = document.createElement('div');
+            relTitle.className = 'related-title';
+            relTitle.innerHTML = '<i>Câu hỏi liên quan:</i>';
+            chatbox.appendChild(relTitle);
 
             data.related_questions.forEach(q => {
-                const span = document.createElement('span');
-                span.className = 'related';
-                span.textContent = q;
-                span.onclick = () => askRelated(q);
-                chatbox.appendChild(span);
+                const rel = document.createElement('div');
+                rel.className = 'related';
+                rel.textContent = `• ${q}`;
+                rel.style.cursor = 'pointer';
+                rel.onclick = () => askRelated(q);
+                chatbox.appendChild(rel);
             });
         }
+
     } catch (err) {
-        // Khi fetch lỗi hoặc backend trả lỗi
-        const errDiv = document.createElement('p');
+        console.error("Lỗi khi gọi API:", err);
+        const errDiv = document.createElement('div');
         errDiv.className = 'answer';
-        errDiv.innerHTML = `<b>A:</b> Không thể trả lời.`;
+        errDiv.innerHTML = `<b>A:</b> Đã xảy ra lỗi. Vui lòng thử lại sau.`;
         chatbox.appendChild(errDiv);
     }
 
-    scrollToBottom();
     qInput.value = "";
-}
-
-// Toggle answer block
-function toggleBlock(el) {
-    el.parentElement.classList.toggle("active");
     scrollToBottom();
 }
 
-// Related question click
+// CLICK ĐỂ MỞ/ĐÓNG ĐIỀU LUẬT
+function toggleLawBlock(header) {
+    const thisBlock = header.parentElement;
+    const wasActive = thisBlock.classList.contains('active');
+
+    // Đóng tất cả
+    document.querySelectorAll('.law-block').forEach(b => b.classList.remove('active'));
+
+    // Mở lại cái vừa click nếu chưa active
+    if (!wasActive) {
+        thisBlock.classList.add('active');
+    }
+}
+
+// CLICK CÂU HỎI GỢI Ý
 async function askRelated(question) {
     document.getElementById("question").value = question;
     await askQuestion();
 }
 
-// Feedback gửi
+// GỬI FEEDBACK
 async function sendFeedback(question, answer) {
-    await fetch("/feedback", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ question, answer, user: "user1" })
-    });
-    alert("Cảm ơn! Feedback đã được ghi nhận.");
+    try {
+        await fetch("/feedback", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ question, answer, user: "user1" })
+        });
+        alert("Cảm ơn bạn! Feedback đã được gửi thành công.");
+    } catch (err) {
+        alert("Gửi feedback thất bại. Vui lòng thử lại.");
+    }
 }
 
-// Escape html & js
-function escapeHtml(s) {
-    if (!s) return '';
-    return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+
+function escapeHtml(text) {
+    if (!text) return '';
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
 }
 
-function escapeJs(s) {
-    if (!s) return '';
-    return s.replace(/'/g,"\\'").replace(/"/g,'\\"').replace(/\n/g,'\\n');
+function escapeJs(text) {
+    if (!text) return '';
+    return text.replace(/'/g, "\\'").replace(/"/g, '\\"').replace(/\n/g, '\\n');
 }
 
-// Scroll mượt xuống cuối
+
 function scrollToBottom() {
     const chatbox = document.getElementById("chatbox");
     chatbox.scrollTop = chatbox.scrollHeight;
+}
+
+
+function askSuggested(text) {
+    document.getElementById('question').value = text;
+    askQuestion();
 }
