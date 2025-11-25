@@ -7,13 +7,26 @@
 </head>
 <body>
     <div class="chat-container">
-        <header>🤖 Chatbot Luật Đất Đai</header>
-        <div id="chatbox"></div>
+        <header>Chatbot Luật Đất Đai</header>
+
+        <div id="chatbox">
+ 
+            <div class="welcome">
+                <div class="robot-icon">Robot</div>
+                <p class="greeting">Xin chào! Tôi là trợ lý pháp lý</p>
+                <p class="subtitle">Chuyên tư vấn <strong>Luật Đất đai</strong> </p>
+                
+        </div>
+
         <div class="input-box">
-            <input type="text" id="question" placeholder="Nhập câu hỏi..." />
+            <input type="text" id="question" placeholder="Nhập câu hỏi..." autocomplete="off" />
             <button onclick="askQuestion()">Gửi</button>
         </div>
     </div>
+
     <script src="/static/main.js"></script>
+
+
+    
 </body>
 </html>
