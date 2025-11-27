@@ -4,6 +4,9 @@ import os
 from sentence_transformers import SentenceTransformer, util
 import torch
 from rapidfuzz import fuzz
+import pickle
+import numpy as np
+from scipy import sparse
 
 # ===== Paths =====
 DATA_DIR = os.path.join(os.path.dirname(__file__), "..", "data")
@@ -16,6 +19,55 @@ print(f"[INFO] Using device for embeddings: {device}")
 # ===== Model =====
 model = SentenceTransformer("all-MiniLM-L6-v2", device=device)
 embeddings = []
+
+# ===== TF-IDF artifacts =====
+TFIDF_VECT_PATH = os.path.join(os.path.dirname(__file__), 'models', 'tfidf_vectorizer.pkl')
+TFIDF_MATRIX_PATH = os.path.join(os.path.dirname(__file__), 'models', 'tfidf_matrix.npz')
+TFIDF_DOCIDS_PATH = os.path.join(os.path.dirname(__file__), 'models', 'tfidf_doc_ids.json')
+tfidf_vectorizer = None
+tfidf_matrix = None
+tfidf_docids = []
+
+
+def load_tfidf_index():
+    global tfidf_vectorizer, tfidf_matrix, tfidf_docids
+    if tfidf_vectorizer is not None and tfidf_matrix is not None:
+        return
+    try:
+        if os.path.exists(TFIDF_VECT_PATH) and os.path.exists(TFIDF_MATRIX_PATH):
+            with open(TFIDF_VECT_PATH, 'rb') as f:
+                tfidf_vectorizer = pickle.load(f)
+            tfidf_matrix = sparse.load_npz(TFIDF_MATRIX_PATH)
+            if os.path.exists(TFIDF_DOCIDS_PATH):
+                with open(TFIDF_DOCIDS_PATH, 'r', encoding='utf-8') as f:
+                    tfidf_docids = json.load(f)
+            print('[TFIDF] Index loaded')
+        else:
+            print('[TFIDF] No TF-IDF index found. Run backend/build_tfidf.py to build it.')
+    except Exception as e:
+        print('[TFIDF] Error loading index:', e)
+
+
+def tfidf_search(query, top_k=5):
+    """Return list of docs (from law_db) with tfidf score."""
+    load_tfidf_index()
+    if tfidf_vectorizer is None or tfidf_matrix is None:
+        return []
+    qv = tfidf_vectorizer.transform([query])
+    # compute cosine similarity via dot product normalized
+    # tfidf_vectorizer by default returns L2-normalized rows, so dot product approximates cosine
+    scores = (tfidf_matrix @ qv.T).toarray().ravel()
+    idxs = np.argsort(scores)[::-1]
+    docs = load_docs()
+    results = []
+    for i in idxs[:top_k]:
+        if scores[i] <= 0:
+            continue
+        d = docs[i]
+        d2 = dict(d)
+        d2['score'] = float(scores[i])
+        results.append(d2)
+    return results
 
 # ===== Load docs =====
 def load_docs():

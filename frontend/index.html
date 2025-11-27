@@ -2,49 +2,94 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <title>Chatbot Luật Đất Đai</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot Luật Đất Đai - ChatGPT Style</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/atom-one-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
-    <div class="chat-container">
-        <header>Chatbot Luật Đất Đai</header>
+    <div class="app-layout">
+        <!-- Sidebar (Chat History) -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <button class="new-chat-btn" onclick="newChat()">+ New Chat</button>
+            </div>
+            <div class="sidebar-content">
+                <div id="chatHistory" class="chat-history"></div>
+            </div>
+            <div class="sidebar-footer">
+                <button class="sidebar-btn" onclick="toggleDarkMode()">🌙 Dark Mode</button>
+              
+            </div>
+        </aside>
 
-        <div id="chatbox">
-        
-            <div class="welcome-section">
-                <div class="robot-icon">Robot</div>
-                <p class="greeting">Xin chào! Tôi là trợ lý pháp lý</p>
-                <p class="subtitle">Chuyên tư vấn <strong>Luật Đất đai 2024</strong> mới nhất</p>
+        <!-- Main Chat Area -->
+        <div class="main-container">
+            <header class="main-header">
+                <h1>Trợ lý Luật Đất Đai</h1>
+                <div class="header-controls">
+                    <label class="toggle-label">
+                        <input type="checkbox" id="searchModeToggle" />
+                        <span>Embedding Mode</span>
+                    </label>
+                </div>
+            </header>
 
-                <div class="suggested-questions">
-                    <div class="suggestion" onclick="askSuggested('Nguyên tắc sử dụng đất là gì?')">
-                        Nguyên tắc sử dụng đất là gì?
-                    </div>
-                    <div class="suggestion" onclick="askSuggested('Thời hạn sử dụng đất nông nghiệp?')">
-                        Thời hạn sử dụng đất nông nghiệp?
-                    </div>
-                    <div class="suggestion" onclick="askSuggested('Chuyển mục đích sử dụng đất cần giấy tờ gì?')">
-                        Chuyển mục đích sử dụng đất cần gì?
-                    </div>
-                    <div class="suggestion" onclick="askSuggested('Quyền và nghĩa vụ của người sử dụng đất?')">
-                        Quyền & nghĩa vụ của người sử dụng đất
+            <div class="chat-area" id="chatArea">
+                <div class="welcome-container">
+                    <div class="welcome-content">
+                        <h2 class="welcome-title">Xin chào! 👋</h2>
+                        <p class="welcome-subtitle">Tôi là trợ lý pháp lý chuyên tư vấn về <strong>Luật Đất đai 2013</strong></p>
+                        
+                        <div class="welcome-suggestions">
+                            <p class="suggestions-title">Bạn có thể hỏi về:</p>
+                            <div class="suggestion-grid">
+                                <div class="suggestion-card" onclick="askSuggested('Nguyên tắc sử dụng đất là gì?')">
+                                    <span class="icon">📋</span>
+                                    <span>Nguyên tắc sử dụng đất</span>
+                                </div>
+                                <div class="suggestion-card" onclick="askSuggested('Thời hạn sử dụng đất nông nghiệp?')">
+                                    <span class="icon">🌾</span>
+                                    <span>Thời hạn sử dụng đất</span>
+                                </div>
+                                <div class="suggestion-card" onclick="askSuggested('Chuyển nhượng đất thủ tục gì?')">
+                                    <span class="icon">📝</span>
+                                    <span>Chuyển nhượng đất</span>
+                                </div>
+                                <div class="suggestion-card" onclick="askSuggested('Nhà nước thu hồi đất bồi thường thế nào?')">
+                                    <span class="icon">💰</span>
+                                    <span>Thu hồi & bồi thường</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="input-box">
-            <input type="text" id="question" placeholder="Nhập câu hỏi..." autocomplete="off" />
-            <button onclick="askQuestion()">Gửi</button>
+            <div class="input-area">
+                <div class="input-wrapper">
+                    <input 
+                        type="text" 
+                        id="question" 
+                        class="message-input" 
+                        placeholder="Nhập câu hỏi về Luật Đất đai..." 
+                        autocomplete="off"
+                        onkeypress="handleInputKeyPress(event)"
+                    />
+                    <button class="send-btn" onclick="askQuestion()" title="Gửi">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="22" y1="2" x2="11" y2="13"></line>
+                            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                        </svg>
+                    </button>
+                </div>
+                <p class="input-hint">Chatbot được hỗ trợ bởi AI - Kiểm tra lại thông tin quan trọng</p>
+            </div>
         </div>
     </div>
 
     <script src="/static/main.js"></script>
-    <script>
-        function askSuggested(text) {
-            document.getElementById('question').value = text;
-            askQuestion();
-        }
-    </script>
 </body>
 </html>

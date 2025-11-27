@@ -3,120 +3,150 @@ async function askQuestion() {
     const question = qInput.value.trim();
     if (!question) return;
 
-    const chatbox = document.getElementById("chatbox");
+    const chatArea = document.getElementById("chatArea");
 
-    const welcomeSection = document.querySelector('.welcome-section');
-    if (welcomeSection) {
-        welcomeSection.remove(); 
+    const welcomeContainer = document.querySelector('.welcome-container');
+    if (welcomeContainer) {
+        welcomeContainer.remove(); 
     }
 
-
-    document.querySelector('.chat-container').classList.add('has-content');
-
     // Thêm câu hỏi người dùng
-    const qDiv = document.createElement('div');
-    qDiv.className = 'question';
-    qDiv.innerHTML = `<b>Q:</b> ${escapeHtml(question)}`;
-    chatbox.appendChild(qDiv);
+    const userMsg = document.createElement('div');
+    userMsg.className = 'message user';
+    userMsg.innerHTML = `<div class="message-content">${escapeHtml(question)}</div>`;
+    chatArea.appendChild(userMsg);
 
     try {
-        const resp = await fetch("/ask", {
+        const mode = getSearchMode();
+        const resp = await fetch("/query_auto", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ question, user_id: "user1" })
+            body: JSON.stringify({ question, mode, user_id: "user1" })
         });
         const data = await resp.json();
 
-        // XỬ LÝ NHIỀU ĐIỀU LUẬT 
+        // Display AI response with typing animation
         if (Array.isArray(data.answer) && data.answer.length > 0) {
             data.answer.forEach(block => {
-                const lawBlock = document.createElement('div');
-                lawBlock.className = 'law-block';
-
-                lawBlock.innerHTML = `
-                    <div class="law-header" onclick="toggleLawBlock(this)">
-                        <span>${escapeHtml(block.title || "Thông tin pháp lý")}</span>
-                       <span class="arrow">&#9660</span>
-                    </div>
-                    <div class="law-content">
-                        ${block.reference ? `<div class="law-ref">${escapeHtml(block.reference)}</div>` : ''}
-                        <div class="law-text">${block.content || 'Không có nội dung'}</div>
-                        <button class="feedback-btn" onclick="sendFeedback('${escapeJs(question)}','${escapeJs(block.content || "")}')">👍 Gửi Feedback</button>
-                    </div>
-                `;
-                chatbox.appendChild(lawBlock);
+                const aiMsg = document.createElement('div');
+                aiMsg.className = 'message ai';
+                
+                let content = `<strong>${escapeHtml(block.title || "Thông tin pháp lý")}</strong><br>`;
+                
+                if (block.reference) {
+                    content += `<div class="reference-box">${escapeHtml(block.reference)}</div>`;
+                }
+                
+                content += highlightKeyphrases(
+                    block.content || 'Không có nội dung',
+                    block.keyphrase || []
+                );
+                
+                if (block.score) {
+                    content += `<br><small>Độ tin cậy: ${(block.score * 100).toFixed(0)}%</small>`;
+                }
+                
+                aiMsg.innerHTML = `<div class="message-content">${content}</div>`;
+                chatArea.appendChild(aiMsg);
             });
         } else {
-            // Trường hợp trả lời dạng text đơn
-            const aDiv = document.createElement('div');
-            aDiv.className = 'answer';
-            aDiv.innerHTML = `<b>A:</b> ${escapeHtml(data.answer || 'Không tìm thấy thông tin phù hợp.')}`;
-            chatbox.appendChild(aDiv);
+            const aiMsg = document.createElement('div');
+            aiMsg.className = 'message ai';
+            aiMsg.innerHTML = `<div class="message-content">${escapeHtml(data.answer || 'Không tìm thấy thông tin phù hợp.')}</div>`;
+            chatArea.appendChild(aiMsg);
         }
 
-        // CÂU HỎI GỢI Ý
-        if (data.related_questions && data.related_questions.length > 0) {
-            const relTitle = document.createElement('div');
-            relTitle.className = 'related-title';
-            relTitle.innerHTML = '<i>Câu hỏi liên quan:</i>';
-            chatbox.appendChild(relTitle);
-
-            data.related_questions.forEach(q => {
-                const rel = document.createElement('div');
-                rel.className = 'related';
-                rel.textContent = `• ${q}`;
-                rel.style.cursor = 'pointer';
-                rel.onclick = () => askRelated(q);
-                chatbox.appendChild(rel);
-            });
-        }
-
+        addToHistory(question);
     } catch (err) {
         console.error("Lỗi khi gọi API:", err);
-        const errDiv = document.createElement('div');
-        errDiv.className = 'answer';
-        errDiv.innerHTML = `<b>A:</b> Đã xảy ra lỗi. Vui lòng thử lại sau.`;
-        chatbox.appendChild(errDiv);
+        const errMsg = document.createElement('div');
+        errMsg.className = 'message ai';
+        errMsg.innerHTML = `<div class="message-content">Đã xảy ra lỗi. Vui lòng thử lại sau.</div>`;
+        chatArea.appendChild(errMsg);
     }
 
-    qInput.value = "";
     scrollToBottom();
 }
 
-// CLICK ĐỂ MỞ/ĐÓNG ĐIỀU LUẬT
-function toggleLawBlock(header) {
-    const thisBlock = header.parentElement;
-    const wasActive = thisBlock.classList.contains('active');
+// Scroll to bottom
+function scrollToBottom() {
+    const chatArea = document.getElementById("chatArea");
+    chatArea.scrollTop = chatArea.scrollHeight;
+}
 
-    // Đóng tất cả
-    document.querySelectorAll('.law-block').forEach(b => b.classList.remove('active'));
+// Suggested question
+function askSuggested(text) {
+    document.getElementById('question').value = text;
+    askQuestion();
+}
 
-    // Mở lại cái vừa click nếu chưa active
-    if (!wasActive) {
-        thisBlock.classList.add('active');
+// Dark mode toggle
+function toggleDarkMode() {
+    document.body.classList.toggle('dark-mode');
+    localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+}
+
+// New chat
+function newChat() {
+    document.getElementById('chatArea').innerHTML = `
+        <div class="welcome-container">
+            <div class="welcome-content">
+                <h2 class="welcome-title">Xin chào! 👋</h2>
+                <p class="welcome-subtitle">Tôi là trợ lý pháp lý chuyên tư vấn về <strong>Luật Đất đai 2013</strong></p>
+                
+                <div class="welcome-suggestions">
+                    <p class="suggestions-title">Bạn có thể hỏi về:</p>
+                    <div class="suggestion-grid">
+                        <div class="suggestion-card" onclick="askSuggested('Nguyên tắc sử dụng đất là gì?')">
+                            <span class="icon">📋</span>
+                            <span>Nguyên tắc sử dụng đất</span>
+                        </div>
+                        <div class="suggestion-card" onclick="askSuggested('Thời hạn sử dụng đất nông nghiệp?')">
+                            <span class="icon">🌾</span>
+                            <span>Thời hạn sử dụng đất</span>
+                        </div>
+                        <div class="suggestion-card" onclick="askSuggested('Chuyển nhượng đất thủ tục gì?')">
+                            <span class="icon">📝</span>
+                            <span>Chuyển nhượng đất</span>
+                        </div>
+                        <div class="suggestion-card" onclick="askSuggested('Nhà nước thu hồi đất bồi thường thế nào?')">
+                            <span class="icon">💰</span>
+                            <span>Thu hồi & bồi thường</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+    document.getElementById('question').value = '';
+    addToHistory('New Chat');
+}
+
+// Open settings
+function openSettings() {
+    alert('Cài đặt hiện chưa có. Vui lòng quay lại sau!');
+}
+
+// Chat history
+function addToHistory(question) {
+    const history = document.getElementById('chatHistory');
+    const item = document.createElement('div');
+    item.className = 'chat-history-item';
+    item.textContent = question.substring(0, 50) + (question.length > 50 ? '...' : '');
+    item.onclick = () => {
+        document.getElementById('question').value = question;
+        askQuestion();
+    };
+    history.insertBefore(item, history.firstChild);
+}
+
+// Handle input keypress
+function handleInputKeyPress(event) {
+    if (event.key === 'Enter' && !event.shiftKey) {
+        event.preventDefault();
+        askQuestion();
     }
 }
-
-// CLICK CÂU HỎI GỢI Ý
-async function askRelated(question) {
-    document.getElementById("question").value = question;
-    await askQuestion();
-}
-
-// GỬI FEEDBACK
-async function sendFeedback(question, answer) {
-    try {
-        await fetch("/feedback", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ question, answer, user: "user1" })
-        });
-        alert("Cảm ơn bạn! Feedback đã được gửi thành công.");
-    } catch (err) {
-        alert("Gửi feedback thất bại. Vui lòng thử lại.");
-    }
-}
-
 
 function escapeHtml(text) {
     if (!text) return '';
@@ -125,19 +155,32 @@ function escapeHtml(text) {
     return div.innerHTML;
 }
 
-function escapeJs(text) {
-    if (!text) return '';
-    return text.replace(/'/g, "\\'").replace(/"/g, '\\"').replace(/\n/g, '\\n');
+// Get search mode from toggle
+function getSearchMode() {
+    const toggle = document.getElementById('searchModeToggle');
+    return toggle.checked ? 'embedding' : 'tfidf';
 }
 
-
-function scrollToBottom() {
-    const chatbox = document.getElementById("chatbox");
-    chatbox.scrollTop = chatbox.scrollHeight;
+// Highlight keyphrases
+function highlightKeyphrases(text, keyphrases) {
+    if (!keyphrases || keyphrases.length === 0) return escapeHtml(text);
+    
+    let result = escapeHtml(text);
+    keyphrases.forEach(phrase => {
+        const escaped = escapeRegex(phrase);
+        const regex = new RegExp(`\\b${escaped}\\b`, 'gi');
+        result = result.replace(regex, `<span class="keyphrase-highlight">$&</span>`);
+    });
+    return result;
 }
 
+// Escape regex special characters
+function escapeRegex(str) {
+    if (!str) return '';
+    return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
 
-function askSuggested(text) {
-    document.getElementById('question').value = text;
-    askQuestion();
+// Load dark mode preference
+if (localStorage.getItem('darkMode') === 'true') {
+    document.body.classList.add('dark-mode');
 }

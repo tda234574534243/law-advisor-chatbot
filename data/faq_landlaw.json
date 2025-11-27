@@ -1,0 +1,42 @@
+[
+  {
+    "q": "Quyền sử dụng đất của tôi được ghi ở đâu?",
+    "a": "Quyền sử dụng đất được ghi trong Giấy chứng nhận quyền sử dụng đất (GCN). Để cấp GCN, nộp hồ sơ đăng ký tại Văn phòng đăng ký đất đai/UBND cấp huyện. Tham chiếu: Luật Đất đai 2013 (các điều liên quan tới cấp GCN)."
+  },
+  {
+    "q": "Tôi có thể chuyển nhượng đất cho người khác không? Thủ tục thế nào?",
+    "a": "Có thể nếu đất không có tranh chấp, không bị kê biên và đáp ứng điều kiện theo Luật. Thủ tục: lập hợp đồng chuyển nhượng, công chứng/chứng thực, nộp hồ sơ sang tên tại Văn phòng đăng ký đất đai gồm GCN, hợp đồng, chứng minh nhân dân/hộ chiếu, giấy tờ liên quan."
+  },
+  {
+    "q": "Nhà nước thu hồi đất để làm dự án, tôi được bồi thường thế nào?",
+    "a": "Khi Nhà nước thu hồi đất để thực hiện dự án công, người có đất được bồi thường, hỗ trợ, tái định cư theo quy định (căn cứ Luật Đất đai và nghị định hướng dẫn về bồi thường). Mức bồi thường phụ thuộc bảng giá đất tỉnh và phương án bồi thường cụ thể của dự án."
+  },
+  {
+    "q": "Chuyển mục đích từ đất nông nghiệp sang đất ở cần điều kiện gì?",
+    "a": "Cần xin phép cơ quan Nhà nước có thẩm quyền (UBND cấp huyện/tỉnh tuỳ quy định), hồ sơ xin chuyển mục đích và đóng tiền sử dụng đất/tiền chênh lệch (nếu có). Phụ thuộc quy hoạch, diện tích và quy định địa phương."
+  },
+  {
+    "q": "Thời hạn sử dụng đất là bao lâu?",
+    "a": "Thời hạn phụ thuộc hình thức giao đất: đất ở thường là ổn định lâu dài; đất thuê/cho thuê có thời hạn cụ thể ghi trong quyết định giao/thuê. Kiểm tra GCN hoặc quyết định giao đất để biết thời hạn."
+  },
+  {
+    "q": "Làm sao tra cứu quy hoạch sử dụng đất cho thửa đất?",
+    "a": "Tra cứu tại Văn phòng đăng ký đất đai địa phương hoặc cổng thông tin quy hoạch/đất đai của UBND tỉnh; cần số tờ, số thửa hoặc tọa độ thửa đất."
+  },
+  {
+    "q": "Có tranh chấp ranh giới thửa đất với hàng xóm, xử lý thế nào?",
+    "a": "Ưu tiên hoà giải ở cấp xã; nếu không hoà giải được thì khiếu nại lên cơ quan có thẩm quyền hoặc khởi kiện tại tòa án. Chuẩn bị giấy tờ chứng minh quyền, bản đồ địa chính, biên bản hiện trạng."
+  },
+  {
+    "q": "Mất GCN thì làm sao?",
+    "a": "Làm hồ sơ đề nghị cấp lại GCN tại Văn phòng đăng ký đất đai, gồm tường trình mất, giấy tờ cá nhân, các bằng chứng liên quan; cơ quan sẽ hướng dẫn xác minh và cấp lại theo quy định."
+  },
+  {
+    "q": "Có phải nộp thuế khi chuyển nhượng đất?",
+    "a": "Có thể phát sinh nghĩa vụ tài chính như thuế thu nhập cá nhân, lệ phí trước bạ, thuế chuyển quyền theo quy định; mức và loại thuế tuỳ trường hợp và quy định cơ quan thuế."
+  },
+  {
+    "q": "Đất đang tranh chấp có thể chuyển nhượng không?",
+    "a": "Thông thường không nên và nhiều nơi cấm sang tên khi thửa đất đang trong quá trình giải quyết tranh chấp; kiểm tra quyết định tạm dừng giao dịch của cơ quan nhà nước nếu có."
+  }
+]
